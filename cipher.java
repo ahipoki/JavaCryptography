@@ -9,6 +9,7 @@ class cipher implements ActionListener {
     
     JTextField decryptTF = new JTextField("Decrypted Text", 20);
     JTextField encryptTF = new JTextField("Encrypted Text", 20);
+    JTextField shiftTF = new JTextField("Shift/Key", 10);
     
     JButton encrypt = new JButton("Encrypt");
     JButton decrypt = new JButton("Decrypt");
@@ -23,8 +24,9 @@ class cipher implements ActionListener {
         choice.add(scytale);
         choice.add(caesar);
         choice.add(vigenere);
-        textOutput.add(encryptTF);
         textOutput.add(decryptTF);
+        textOutput.add(encryptTF);
+        textOutput.add(shiftTF);
         
         frame.setSize(750, 500);
         frame.setLayout(new BorderLayout());
