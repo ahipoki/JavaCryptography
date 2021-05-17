@@ -120,34 +120,22 @@ class cipher implements ActionListener {
         return key;
     }
     
-    public String vigenereEncrypt(String plainText, int shift){
-        StringBuilder encrypted = new StringBuilder(plainText);
-        String alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
-        String alphabet2 = alphabet.toLowerCase();
-        shift = Integer.parseInt(shiftEdit.getText().toString());
-        String keyedalphabet = alphabet.substring(shift) + alphabet.substring(0, shift);
-        for (int q = 0; q < encrypted.length(); q++){
-            char currchar = encrypted.charAt(q);
-            int index = alphabet.indexOf(currchar);
-            if (index != -1){
-                char newChar = keyedAlphabet.charAt(index);
-                encrypted.setCharAt(q, newChar);
-            }
-            index = alphabet2.indexOf(currchar);
-            if (index != -1){
-                String keyedalphabet2 = keyedalphabet.toLowerCase();
-                char newChar = keyedalphabet2.charAt(index);
-                encrypted.setCharAt(q, newChar);
-            }
+    public String vigenereEncrypt(String plainText, String key){
+        String encrypted = "";
+        for (int i = 0; i < plainText.length(); i++){
+            int x = (plainText.charAt(i) + key.charAt(i)) % 26;
+            x += 'A';
+            encrypted += (char)(x);
         }
-        return encrypted.toString();
+        return encrypted;
     }
     
-    public String vigenereDecrypt(String decryptText, int key){
+    public String vigenereDecrypt(String decryptText, String key){
         String dec = "";
-        for (int i = 0; i < decryptText.length(); i++){
-            char ch = (char)(decryptText.codePointAt(i) - key);
-            dec += ch;
+        for (int i = 0; i < decryptText.length() && i < key.length(); i++){
+            int x = (decryptText.charAt(i) - key.charAt(i) + 26) % 26;
+            x += 'A';
+            dec += (char)(x);
         }
         return dec;
     }
