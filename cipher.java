@@ -97,48 +97,48 @@ class cipher implements ActionListener {
         return encrypted;
     }
     
+    public String caesarDecrypt(String cipherText, int shift){
+        String dec = "";
+        for (int i = 0; i < cipherText.length(); i++){
+            char ch = (char)((cipherText.codePointAt(i) - key) % 26);
+            dec += ch;
+        }
+        return dec;
+    }
+    
+    public String vigenereEncrypt(String plainText, int shift){
+        StringBuilder encrypted = new StringBuilder(plainText);
+        String alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+        String alphabet2 = alphabet.toLowerCase();
+        shift = Integer.parseInt(shiftEdit.getText().toString());
+        String keyedalphabet = alphabet.substring(shift) + alphabet.substring(0, shift);
+        for (int q = 0; q < encrypted.length(); q++){
+            char currchar = encrypted.charAt(q);
+            int index = alphabet.indexOf(currchar);
+            if (index != -1){
+                char newChar = keyedAlphabet.charAt(index);
+                encrypted.setCharAt(q, newChar);
+            }
+            index = alphabet2.indexOf(currchar);
+            if (index != -1){
+                String keyedalphabet2 = keyedalphabet.toLowerCase();
+                char newChar = keyedalphabet2.charAt(index);
+                encrypted.setCharAt(q, newChar);
+            }
+        }
+        return encrypted.toString();
+    }
+    
+    public String vigenereDecrypt(String decryptText, int key){
+        String dec = "";
+        for (int i = 0; i < decryptText.length(); i++){
+            char ch = (char)(decryptText.codePointAt(i) - key);
+            dec += ch;
+        }
+        return dec;
+    }
+    
     public static void main(String[] args){
         new cipher();
     }
 }
-
-/*public String caesarDecrypt(String cipherText, int shift){
-    String dec = "";
-    for (int i = 0; i < cipherText.length(); i++){
-        char ch = (char)((cipherText.codePointAt(i) - key) % 26);
-        dec += ch;
-    }
-    return dec;
-}
-
-public String vigenereEncrypt(String plainText, int shift){
-    StringBuilder encrypted = new StringBuilder(plainText);
-    String alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
-    String alphabet2 = alphabet.toLowerCase();
-    shift = Integer.parseInt(shiftEdit.getText().toString());
-    String keyedalphabet = alphabet.substring(shift) + alphabet.substring(0, shift);
-    for (int q = 0; q < encrypted.length(); q++){
-        char currchar = encrypted.charAt(q);
-        int index = alphabet.indexOf(currchar);
-        if (index != -1){
-            char newChar = keyedAlphabet.charAt(index);
-            encrypted.setCharAt(q, newChar);
-        }
-        index = alphabet2.indexOf(currchar);
-        if (index != -1){
-            String keyedalphabet2 = keyedalphabet.toLowerCase();
-            char newChar = keyedalphabet2.charAt(index);
-            encrypted.setCharAt(q, newChar);
-        }
-    }
-    return encrypted.toString();
-}
-
-public String vigenereDecrypt(String decryptText, int key){
-    String dec = "";
-    for (int i = 0; i < decryptText.length(); i++){
-        char ch = (char)(decryptText.codePointAt(i) - key);
-        dec += ch;
-    }
-    return dec;
-}*/
