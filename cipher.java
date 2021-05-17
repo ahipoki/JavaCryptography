@@ -50,14 +50,13 @@ class cipher implements ActionListener {
         String plainText;
         if (e.getSource() == encrypt){
             if (scytale.isSelected()){
-                scytaleEncrypt(decryptTF.getText(), Integer.parseInt(shiftTF.getText()));
+                scytaleEncrypt(decryptTF.getText(), Integer.parseInt(shiftTF.getText().toString()));
             }
             else if (caesar.isSelected()){
-                caesarEncrypt(decryptTF.getText(), Integer.parseInt(shiftTF.getText()));
+                caesarEncrypt(decryptTF.getText(), Integer.parseInt(shiftTF.getText().toString()));
             }
             else if (vigenere.isSelected()){
-                generateKey(decryptTF.getText(), shiftTF.getText().toString());
-                vigenereEncrypt(decryptTF.getText(), shiftTF.getText().toString());
+                vigenereEncrypt(decryptTF.getText().toString(), shiftTF.getText().toString());
             }
         }
         else if (e.getSource() == decrypt){
@@ -68,37 +67,28 @@ class cipher implements ActionListener {
                 caesarDecrypt(encryptTF.getText(), Integer.parseInt(shiftTF.getText().toString()));
             }
             else if (vigenere.isSelected()){
-                generateKey(encryptTF.getText(), shiftTF.getText());
-                vigenereDecrypt(encryptTF.getText(), shiftTF.getText());
+                vigenereDecrypt(encryptTF.getText(), shiftTF.getText().toString());
             }
         }
     }
     
-    public String scytaleEncrypt(String plainMessage, int numRows){
-        String encryptedText = "";
-        if (numRows >= plainMessage.length() || numRows <= 0){
-            return plainMessage;
-        }
-        else{
-            while (plainMessage.length() % numRows != 0){
-                plainMessage += " ";
-            }
-            int numCols = plainMessage.length() / numRows;
-            for (int i = 0; i < numCols; i++){
-                for (int y = i; y < plainMessage.length(); y += numCols){
-                    encryptedText += plainMessage.charAt(y);
-                }
+    public StringBuilder scytaleEncrypt(String plainMessage, int numRows){
+        StringBuilder encrypted = new StringBuilder();
+        for (int i = 0; i < numRows; i++){
+            for (int j = 0; i+j < plainMessage.length(); j += numRows){
+                encrypted.append(plainMessage.charAt(i+j));
             }
         }
-        encryptTF.setText(encryptedText);
-        return encryptedText;
+        String Encrypted = encrypted.toString();
+        encryptTF.setText(toUpper(Encrypted));
+        return encrypted;
     }
     
     public String scytaleDecrypt(String encryptText, int numRows){
         String decryptedText = "";
         int numCols = encryptText.length() / numRows;
-        decryptedText = scytaleEncrypt(encryptText, numCols);
-        decryptTF.setText(decryptedText);
+        decryptedText = scytaleEncrypt(encryptText, numCols).toString();
+        decryptTF.setText(toUpper(decryptedText));
         return decryptedText;
     }
     
@@ -115,33 +105,35 @@ class cipher implements ActionListener {
             }
         }
         String Encrypted = encrypted.toString();
-        encryptTF.setText(Encrypted);
+        encryptTF.setText(toUpper(Encrypted));
         return encrypted;
     }
     
     public String caesarDecrypt(String cipherText, int shift){
         String dec = "";
+        char ch;
         for (int i = 0; i < cipherText.length(); i++){
-            char ch = (char)((cipherText.codePointAt(i) - shift) % 26);
-            dec += ch;
+            ch = cipherText.charAt(i);
+            if (ch >= 'a' && ch <= 'z'){
+                ch = (char)(ch-shift);
+                if (ch < 'a'){
+                    ch = (char)(ch + 'z' - 'a' + 1);
+                }
+                dec += ch;
+            }
+            else if (ch >= 'A' && ch <= 'Z'){
+                ch = (char)(ch-shift);
+                if (ch < 'A'){
+                    ch = (char)(ch + 'Z' - 'A' + 1);
+                }
+                dec += ch;
+            }
+            else{
+                dec += ch;
+            }
         }
-        decryptTF.setText(dec);
+        decryptTF.setText(toUpper(dec));
         return dec;
-    }
-    
-    public String generateKey(String message, String key){
-        int x = message.length();
-        for (int i = 0; ; i++){
-            if (x == i){
-                i = 0;
-            }
-            if (key.length() == message.length()){
-                break;
-            }
-            key += (key.charAt(i));
-        }
-        shiftTF.setText(key);
-        return key;
     }
     
     public String vigenereEncrypt(String plainText, String key){
@@ -151,7 +143,7 @@ class cipher implements ActionListener {
             x += 'A';
             encrypted += (char)(x);
         }
-        encryptTF.setText(encrypted);
+        encryptTF.setText(toUpper(encrypted));
         return encrypted;
     }
     
@@ -162,8 +154,19 @@ class cipher implements ActionListener {
             x += 'A';
             dec += (char)(x);
         }
-        decryptTF.setText(dec);
+        decryptTF.setText(toUpper(dec));
         return dec;
+    }
+    
+    static String toUpper(String s){//Make inputs and outputs uppercase
+        StringBuffer str = new StringBuffer(s);
+        for (int i = 0; i < s.length(); i++){
+            if (Character.isLowerCase(s.charAt(i))){
+                str.setCharAt(i, Character.toUpperCase(s.charAt(i)));
+            }
+        }
+        s = str.toString();
+        return s;
     }
     
     public static void main(String[] args){
