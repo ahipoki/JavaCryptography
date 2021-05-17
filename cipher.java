@@ -82,32 +82,25 @@ class cipher implements ActionListener {
         return decryptedText;
     }
     
+    public static StringBuffer caesarEncrypt(String plainText, int shift){
+        StringBuffer encrypted = new StringBuffer();
+        for (int q = 0; q < plainText.length(); q++){
+            if (Character.isUpperCase(plainText.charAt(q))){
+                char ch = (char)(((int)plainText.charAt(q) + shift-65) % 26+65);
+                encrypted.append(ch);
+            }
+            else{
+                char ch = (char)(((int)plainText.charAt(q) + shift-97) % 26+97);
+                encrypted.append(ch);
+            }
+        }
+        return encrypted;
+    }
+    
     public static void main(String[] args){
         new cipher();
     }
 }
-
-/*public String caesarEncrypt(String plainText, int shift){
-    StringBuilder encrypted = new StringBuilder(message);
-    String alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
-    String alphabet2 = alphabet.toLowerCase();
-    String keyedalphabet = alphabet.substring(key) + alphabet.substring(0, key);
-    for (int q = 0; q < encrypted.length(); q++){
-        char currchar = encrypted.charAt(q);
-        int index = alphabet.indexOf(currchar);
-        if (index != -1){
-            char newChar = keyedalphabet.charAt(index);
-            encrypted.setCharAt(q, newChar);
-        }
-        index = alphabet2.indexOf(currchar);
-        if (index != -1){
-            String keyedalphabet2 = keyedalphabet.toLowerCase();
-            char newChar = keyedalphabet2.charAt(index);
-            encrypted.setCharAt(q, newChar);
-        }
-    }
-    return encrypted.toString();
-}*/
 
 /*public String caesarDecrypt(String cipherText, int shift){
     String dec = "";
