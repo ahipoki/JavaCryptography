@@ -100,7 +100,7 @@ class cipher implements ActionListener {
     public String caesarDecrypt(String cipherText, int shift){
         String dec = "";
         for (int i = 0; i < cipherText.length(); i++){
-            char ch = (char)((cipherText.codePointAt(i) - key) % 26);
+            char ch = (char)((cipherText.codePointAt(i) - shift) % 26);
             dec += ch;
         }
         return dec;
