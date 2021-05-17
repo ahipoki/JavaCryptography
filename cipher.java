@@ -50,14 +50,14 @@ class cipher implements ActionListener {
         String plainText;
         if (e.getSource() == encrypt){
             if (scytale.isSelected()){
-                scytaleEncrypt(decryptTF.getText(), Integer.parseInt(shiftTF.getText().toString()));
+                scytaleEncrypt(decryptTF.getText(), Integer.parseInt(shiftTF.getText()));
             }
             else if (caesar.isSelected()){
-                caesarEncrypt(decryptTF.getText(), Integer.parseInt(shiftTF.getText().toString()));
+                caesarEncrypt(decryptTF.getText(), Integer.parseInt(shiftTF.getText()));
             }
             else if (vigenere.isSelected()){
-                generateKey(decryptTF.getText(), shiftTF.getText());
-                vigenereEncrypt(decryptTF.getText(), shiftTF.getText());
+                generateKey(decryptTF.getText(), shiftTF.getText().toString());
+                vigenereEncrypt(decryptTF.getText(), shiftTF.getText().toString());
             }
         }
         else if (e.getSource() == decrypt){
@@ -90,7 +90,7 @@ class cipher implements ActionListener {
                 }
             }
         }
-        decryptTF.setText(encryptedText);
+        encryptTF.setText(encryptedText);
         return encryptedText;
     }
     
@@ -98,7 +98,7 @@ class cipher implements ActionListener {
         String decryptedText = "";
         int numCols = encryptText.length() / numRows;
         decryptedText = scytaleEncrypt(encryptText, numCols);
-        encryptTF.setText(decryptedText);
+        decryptTF.setText(decryptedText);
         return decryptedText;
     }
     
@@ -115,7 +115,7 @@ class cipher implements ActionListener {
             }
         }
         String Encrypted = encrypted.toString();
-        decryptTF.setText(Encrypted);
+        encryptTF.setText(Encrypted);
         return encrypted;
     }
     
@@ -125,7 +125,7 @@ class cipher implements ActionListener {
             char ch = (char)((cipherText.codePointAt(i) - shift) % 26);
             dec += ch;
         }
-        encryptTF.setText(dec);
+        decryptTF.setText(dec);
         return dec;
     }
     
@@ -140,6 +140,7 @@ class cipher implements ActionListener {
             }
             key += (key.charAt(i));
         }
+        shiftTF.setText(key);
         return key;
     }
     
@@ -150,7 +151,7 @@ class cipher implements ActionListener {
             x += 'A';
             encrypted += (char)(x);
         }
-        decryptTF.setText(encrypted);
+        encryptTF.setText(encrypted);
         return encrypted;
     }
     
@@ -161,7 +162,7 @@ class cipher implements ActionListener {
             x += 'A';
             dec += (char)(x);
         }
-        encryptTF.setText(dec);
+        decryptTF.setText(dec);
         return dec;
     }
     
