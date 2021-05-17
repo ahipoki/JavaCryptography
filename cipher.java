@@ -74,7 +74,7 @@ class cipher implements ActionListener {
         }
     }
     
-    public static String scytaleEncrypt(String plainMessage, int numRows){
+    public String scytaleEncrypt(String plainMessage, int numRows){
         String encryptedText = "";
         if (numRows >= plainMessage.length() || numRows <= 0){
             return plainMessage;
@@ -90,17 +90,19 @@ class cipher implements ActionListener {
                 }
             }
         }
+        decryptTF.setText(encryptedText);
         return encryptedText;
     }
     
-    public static String scytaleDecrypt(String encryptText, int numRows){
+    public String scytaleDecrypt(String encryptText, int numRows){
         String decryptedText = "";
         int numCols = encryptText.length() / numRows;
         decryptedText = scytaleEncrypt(encryptText, numCols);
+        encryptTF.setText(decryptedText);
         return decryptedText;
     }
     
-    public static StringBuffer caesarEncrypt(String plainText, int shift){
+    public StringBuffer caesarEncrypt(String plainText, int shift){
         StringBuffer encrypted = new StringBuffer();
         for (int q = 0; q < plainText.length(); q++){
             if (Character.isUpperCase(plainText.charAt(q))){
@@ -112,6 +114,8 @@ class cipher implements ActionListener {
                 encrypted.append(ch);
             }
         }
+        String Encrypted = encrypted.toString();
+        decryptTF.setText(Encrypted);
         return encrypted;
     }
     
@@ -121,6 +125,7 @@ class cipher implements ActionListener {
             char ch = (char)((cipherText.codePointAt(i) - shift) % 26);
             dec += ch;
         }
+        encryptTF.setText(dec);
         return dec;
     }
     
@@ -145,6 +150,7 @@ class cipher implements ActionListener {
             x += 'A';
             encrypted += (char)(x);
         }
+        decryptTF.setText(encrypted);
         return encrypted;
     }
     
@@ -155,6 +161,7 @@ class cipher implements ActionListener {
             x += 'A';
             dec += (char)(x);
         }
+        encryptTF.setText(dec);
         return dec;
     }
     
