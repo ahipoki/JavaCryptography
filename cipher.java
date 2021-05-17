@@ -106,6 +106,20 @@ class cipher implements ActionListener {
         return dec;
     }
     
+    public String generateKey(String message, String key){
+        int x = message.length();
+        for (int i = 0; ; i++){
+            if (x == i){
+                i = 0;
+            }
+            if (key.length() == message.length()){
+                break;
+            }
+            key += (key.charAt(i));
+        }
+        return key;
+    }
+    
     public String vigenereEncrypt(String plainText, int shift){
         StringBuilder encrypted = new StringBuilder(plainText);
         String alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
