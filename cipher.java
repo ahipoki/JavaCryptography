@@ -50,24 +50,26 @@ class cipher implements ActionListener {
         String plainText;
         if (e.getSource() == encrypt){
             if (scytale.isSelected()){
-                scytaleEncrypt(decryptTF.getText(), Integer.parseInt(shiftTF.getText()));
+                scytaleEncrypt(decryptTF.getText(), Integer.parseInt(shiftTF.getText().toString()));
             }
             else if (caesar.isSelected()){
-                
+                caesarEncrypt(decryptTF.getText(), Integer.parseInt(shiftTF.getText().toString()));
             }
             else if (vigenere.isSelected()){
-                
+                generateKey(decryptTF.getText(), shiftTF.getText());
+                vigenereEncrypt(decryptTF.getText(), shiftTF.getText());
             }
         }
         else if (e.getSource() == decrypt){
             if (scytale.isSelected()){
-                
+                scytaleDecrypt(encryptTF.getText(), Integer.parseInt(shiftTF.getText().toString()));
             }
             else if (caesar.isSelected()){
-                
+                caesarDecrypt(encryptTF.getText(), Integer.parseInt(shiftTF.getText().toString()));
             }
             else if (vigenere.isSelected()){
-                
+                generateKey(encryptTF.getText(), shiftTF.getText());
+                vigenereDecrypt(encryptTF.getText(), shiftTF.getText());
             }
         }
     }
