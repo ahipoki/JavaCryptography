@@ -7,8 +7,8 @@ class cipher implements ActionListener {
     JPanel choice = new JPanel();
     JPanel textOutput = new JPanel();
     
-    JTextField decryptTF = new JTextField(20);
-    JTextField encryptTF = new JTextField(20);
+    JTextField decryptTF = new JTextField("Decrypted Text", 20);
+    JTextField encryptTF = new JTextField("Encrypted Text", 20);
     
     JButton encrypt = new JButton("Encrypt");
     JButton decrypt = new JButton("Decrypt");
@@ -44,46 +44,47 @@ class cipher implements ActionListener {
     }
     
     public void actionPerformed(ActionEvent e){
-        //encrypt encryption = new encrypt();
         String encryptedText;
         String plainText;
         if (e.getSource() == encrypt){
-            
+            if (scytale.isSelected()){
+                
+            }
         }
         else if (e.getSource() == decrypt){
             
         }
     }
     
+    public static String scytaleEncrypt(String plainMessage, int numRows){
+        String encryptedText = "";
+        if (numRows >= plainMessage.length() || numRows <= 0){
+            return plainMessage;
+        }
+        else{
+            while (plainMessage.length() % numRows != 0){
+                plainMessage += " ";
+            }
+            int numCols = plainMessage.length() / numRows;
+            for (int i = 0; i < numCols; i++){
+                for (int y = i; y < plainMessage.length(); y += numCols){
+                    encryptedText += plainMessage.charAt(y);
+                }
+            }
+        }
+        return encryptedText;
+    }
+    
+    public static String scytaleDecrypt(String encryptText, int numRows){
+        String decryptedText = "";
+        int numCols = encryptText.length() / numRows;
+        decryptedText = scytaleEncrypt(encryptText, numCols);
+        return decryptedText;
+    }
+    
     public static void main(String[] args){
         new cipher();
     }
-}
-
-/*public static String scytaleEncrypt(String plainMessage, int numRows){
-    String encryptedText = "";
-    if (numRows >= plainMessage.length() || numRows <= 0){
-        return plainMessage;
-    }
-    else{
-        while (plainMessage.length() % numRows != 0){
-            plainMessage += " ";
-        }
-        int numCols = plainMessage.length() / numRows;
-        for (int i = 0; i < numCols; i++){
-            for (int y = i; y < plainMessage.length(); y += numCols){
-                encryptedText += plainMessage.charAt(y);
-            }
-        }
-    }
-    return encryptedText;
-}*/
-
-/*public static String scytaleDecrypt(String encryptText, int numRows){
-    String decryptedText = "";
-    int numCols = encryptText.length() / numRows;
-    decryptedText = scytaleEncrypt(encryptText, numCols);
-    return decryptedText;
 }
 
 /*public String caesarEncrypt(String plainText, int shift){
