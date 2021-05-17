@@ -74,6 +74,7 @@ class cipher implements ActionListener {
     
     public StringBuilder scytaleEncrypt(String plainMessage, int numRows){
         StringBuilder encrypted = new StringBuilder();
+        plainMessage = plainMessage.replaceAll("\\s", "");
         for (int i = 0; i < numRows; i++){
             for (int j = 0; i+j < plainMessage.length(); j += numRows){
                 encrypted.append(plainMessage.charAt(i+j));
@@ -86,6 +87,7 @@ class cipher implements ActionListener {
     
     public String scytaleDecrypt(String encryptText, int numRows){
         String decryptedText = "";
+        encryptText = encryptText.replaceAll("\\s", "");
         int numCols = encryptText.length() / numRows;
         decryptedText = scytaleEncrypt(encryptText, numCols).toString();
         decryptTF.setText(toUpper(decryptedText));
@@ -94,6 +96,7 @@ class cipher implements ActionListener {
     
     public StringBuffer caesarEncrypt(String plainText, int shift){
         StringBuffer encrypted = new StringBuffer();
+        plainText = plainText.replaceAll("\\s", "");
         for (int q = 0; q < plainText.length(); q++){
             if (Character.isUpperCase(plainText.charAt(q))){
                 char ch = (char)(((int)plainText.charAt(q) + shift-65) % 26+65);
@@ -111,6 +114,7 @@ class cipher implements ActionListener {
     
     public String caesarDecrypt(String cipherText, int shift){
         String dec = "";
+        cipherText = cipherText.replaceAll("\\s", "");
         char ch;
         for (int i = 0; i < cipherText.length(); i++){
             ch = cipherText.charAt(i);
@@ -138,6 +142,7 @@ class cipher implements ActionListener {
     
     public String vigenereEncrypt(String plainText, String key){
         String encrypted = "";
+        plainText = plainText.replaceAll("\\s", "");
         for (int i = 0; i < plainText.length(); i++){
             int x = (plainText.charAt(i) + key.charAt(i)) % 26;
             x += 'A';
@@ -149,6 +154,7 @@ class cipher implements ActionListener {
     
     public String vigenereDecrypt(String decryptText, String key){
         String dec = "";
+        decryptText = decryptText.replaceAll("\\s", "");
         for (int i = 0; i < decryptText.length() && i < key.length(); i++){
             int x = (decryptText.charAt(i) - key.charAt(i) + 26) % 26;
             x += 'A';
