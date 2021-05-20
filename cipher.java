@@ -112,18 +112,18 @@ class cipher implements ActionListener {
     
     public String caesarDecrypt(String cipherText, int shift){//caesar decryption
         String dec = "";
-        cipherText = cipherText.replaceAll("\\s", "");
+        cipherText = cipherText.replaceAll("\\s", "");//remove spaces
         char ch;
-        for (int i = 0; i < cipherText.length(); i++){
+        for (int i = 0; i < cipherText.length(); i++){//loop through length of text and decrypt using the shift amount
             ch = cipherText.charAt(i);
-            if (ch >= 'a' && ch <= 'z'){
+            if (ch >= 'a' && ch <= 'z'){//lowercase
                 ch = (char)(ch-shift);
                 if (ch < 'a'){
                     ch = (char)(ch + 'z' - 'a' + 1);
                 }
                 dec += ch;
             }
-            else if (ch >= 'A' && ch <= 'Z'){
+            else if (ch >= 'A' && ch <= 'Z'){//uppercase
                 ch = (char)(ch-shift);
                 if (ch < 'A'){
                     ch = (char)(ch + 'Z' - 'A' + 1);
@@ -134,39 +134,39 @@ class cipher implements ActionListener {
                 dec += ch;
             }
         }
-        decryptTF.setText(toUpper(dec));
+        decryptTF.setText(toUpper(dec));//set decrypted text to new decrypted text
         return dec;
     }
     
-    public String vigenereEncrypt(String plainText, String key){
+    public String vigenereEncrypt(String plainText, String key){//vigenere encryption
         String encrypted = "";
-        key = key.toUpperCase();
-        plainText = plainText.toUpperCase();
-        for (int i = 0, j = 0; i < plainText.length(); i++){
+        key = key.toUpperCase();//make key uppercase
+        plainText = plainText.toUpperCase();//make text uppercase
+        for (int i = 0, j = 0; i < plainText.length(); i++){//loop through length of text
             char c = plainText.charAt(i);
-            if (c < 'A' || c > 'Z'){
-                continue;
+            if (c < 'A' || c > 'Z'){//if it's not a letter
+                continue;//skip that char
             }
-            encrypted += (char)((c + key.charAt(j) - 2 * 'A') % 26 + 'A');
+            encrypted += (char)((c + key.charAt(j) - 2 * 'A') % 26 + 'A');//add char to encrypted text
             j = ++j % key.length();
         }
-        encryptTF.setText(toUpper(encrypted));
-        return encrypted;
+        encryptTF.setText(toUpper(encrypted));//set encrypted text to new encrypted text
+        return encrypted;//return encrypted
     }
     
-    public String vigenereDecrypt(String decryptText, String key){
+    public String vigenereDecrypt(String decryptText, String key){//vigenere decrypt
         String dec = "";
-        key = key.toUpperCase();
-        decryptText = decryptText.toUpperCase();
-        for (int i = 0, j = 0; i < decryptText.length(); i++){
+        key = key.toUpperCase();//make key uppercase
+        decryptText = decryptText.toUpperCase();//make text uppercase
+        for (int i = 0, j = 0; i < decryptText.length(); i++){//loop through text length
             char c = decryptText.charAt(i);
-            if (c < 'A' || c > 'Z'){
-                continue;
+            if (c < 'A' || c > 'Z'){//if it's not a letter
+                continue;//skip that char
             }
-            dec += (char)((c - key.charAt(j) + 26) % 26 + 'A');
+            dec += (char)((c - key.charAt(j) + 26) % 26 + 'A');//add the shifted char to the decrypted text
             j = ++j % key.length();
         }
-        decryptTF.setText(toUpper(dec));
+        decryptTF.setText(toUpper(dec));//set decrypted text to new decrypted text
         return dec;
     }
     
