@@ -97,20 +97,20 @@ class cipher implements ActionListener {
         plainText = plainText.replaceAll("\\s", "");//Remove all spaces from text
         for (int q = 0; q < plainText.length(); q++){//Loop through until original text's length
             if (Character.isUpperCase(plainText.charAt(q))){//If the character is uppercase
-                char ch = (char)(((int)plainText.charAt(q) + shift-65) % 26+65);//
-                encrypted.append(ch);
+                char ch = (char)(((int)plainText.charAt(q) + shift-65) % 26+65);//Shift the current character
+                encrypted.append(ch);//Add the shifted character to the encrypted text
             }
-            else{
-                char ch = (char)(((int)plainText.charAt(q) + shift-97) % 26+97);
-                encrypted.append(ch);
+            else{//Anything else
+                char ch = (char)(((int)plainText.charAt(q) + shift-97) % 26+97);//Shift the current character by lowercase amounts
+                encrypted.append(ch);//Add the shifted character to the encrypted text
             }
         }
-        String Encrypted = encrypted.toString();
-        encryptTF.setText(toUpper(Encrypted));
-        return encrypted;
+        String Encrypted = encrypted.toString();//Encrypted is encrypted converted to a string
+        encryptTF.setText(toUpper(Encrypted));//Set the encrypted text field to the encrypted text
+        return encrypted;//Return encrypted
     }
     
-    public String caesarDecrypt(String cipherText, int shift){
+    public String caesarDecrypt(String cipherText, int shift){//caesar decryption
         String dec = "";
         cipherText = cipherText.replaceAll("\\s", "");
         char ch;
@@ -140,11 +140,15 @@ class cipher implements ActionListener {
     
     public String vigenereEncrypt(String plainText, String key){
         String encrypted = "";
-        plainText = plainText.replaceAll("\\s", "");
-        for (int i = 0; i < plainText.length(); i++){
-            int x = (plainText.charAt(i) + key.charAt(i)) % 26;
-            x += 'A';
-            encrypted += (char)(x);
+        key = key.toUpperCase();
+        plainText = plainText.toUpperCase();
+        for (int i = 0, j = 0; i < plainText.length(); i++){
+            char c = plainText.charAt(i);
+            if (c < 'A' || c > 'Z'){
+                continue;
+            }
+            encrypted += (char)((c + key.charAt(j) - 2 * 'A') % 26 + 'A');
+            j = ++j % key.length();
         }
         encryptTF.setText(toUpper(encrypted));
         return encrypted;
@@ -152,11 +156,15 @@ class cipher implements ActionListener {
     
     public String vigenereDecrypt(String decryptText, String key){
         String dec = "";
-        decryptText = decryptText.replaceAll("\\s", "");
-        for (int i = 0; i < decryptText.length() && i < key.length(); i++){
-            int x = (decryptText.charAt(i) - key.charAt(i) + 26) % 26;
-            x += 'A';
-            dec += (char)(x);
+        key = key.toUpperCase();
+        decryptText = decryptText.toUpperCase();
+        for (int i = 0, j = 0; i < decryptText.length(); i++){
+            char c = decryptText.charAt(i);
+            if (c < 'A' || c > 'Z'){
+                continue;
+            }
+            dec += (char)((c - key.charAt(j) + 26) % 26 + 'A');
+            j = ++j % key.length();
         }
         decryptTF.setText(toUpper(dec));
         return dec;
